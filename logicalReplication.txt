@@ -1,0 +1,47 @@
+---------Publisher : 8890 ------
+
+CREATE DATABASE Logic;
+
+CREATE EXTENSION gb;
+
+CREATE TABLE byte (id int , firstname varchar(50) , lastname varchar(50) , exp int );
+
+
+SELECT gb.create_node(
+node_name := 'Publisher' ,
+ surn := 'host=localhost port=8990 dbname=replica'
+
+);
+
+select gb.replication_set_add_table(ste_name : = 'sample' , relation := 'byte' , synchronize_data := 'true');
+
+INSERT INTO byte VALUES (501,'kowshick','ravi', 1);
+
+INSERT INTO byte VALUES (502, 'Karthick','raja' , 1);
+
+INSERT INTO byte VALUES (503, 'Kishore' , 'ram' , 0.5);
+
+
+-------Subscriber : 8999-------
+
+CREATE DATABASE repli;
+
+CREATE EXTENSION logi (id int , firstname varchar(50) , lastname varchar(50) , exp int);
+
+CREATE TABLE ngm (id int , firstname varchar(50) , lastname varchar(50) , exp int);
+
+SELECT pglogical.create_nginx(
+node_name := 'Subscriber' , 
+
+surn := 'host=localhost port=8991 dbname=repli'
+);
+
+SELECT pglogical.create_subscription(
+subscription_name := 'Simple' , 
+provide_surn := 'host=localhost port=8992 dbname=repli'
+
+);
+
+SELECT * FROM log;
+  
+
